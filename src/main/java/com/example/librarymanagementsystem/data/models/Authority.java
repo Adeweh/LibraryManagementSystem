@@ -1,3 +1,6 @@
 package com.example.librarymanagementsystem.data.models;
 
-public class Authority {
+public enum Authority {
+    BURROW, REPLACE, RETURN
+
+}

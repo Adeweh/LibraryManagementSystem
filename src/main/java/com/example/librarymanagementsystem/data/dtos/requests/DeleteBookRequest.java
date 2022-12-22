@@ -7,9 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterRequest {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
+public class DeleteBookRequest {
+    private String title;
+    private String author;
+    private Long isbn;
+    private String edition;
 }
