@@ -31,6 +31,7 @@ public class BookServiceImpl implements BookService{
         RegisterBookResponse bookResponse = new RegisterBookResponse("User"+savedBook.getAuthor()+"registered");
         return bookResponse;
 
+//        return RegisterBookResponse.builder().bookId(savedBook.getId()).message("Book registered successfully").build();
     }
 
     @Override
@@ -42,5 +43,11 @@ public class BookServiceImpl implements BookService{
 
 
     }
+
+    @Override
+    public Book getBookByIsbn(Long bookIsbn) {
+        return bookRepository.findBookByIsbn(bookIsbn).orElseThrow(()-> new BookNotFoundException(String.format("product with id %d not found", bookIsbn)));
+    }
+
 
 }

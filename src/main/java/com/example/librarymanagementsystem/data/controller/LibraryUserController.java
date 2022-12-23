@@ -1,5 +1,6 @@
 package com.example.librarymanagementsystem.data.controller;
 
+import com.example.librarymanagementsystem.data.dtos.requests.LoginRequest;
 import com.example.librarymanagementsystem.data.dtos.requests.RegisterRequest;
 import com.example.librarymanagementsystem.exceptions.LibrarySystemException;
 import com.example.librarymanagementsystem.services.LibraryUserService;
@@ -19,6 +20,12 @@ public class LibraryUserController {
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) throws LibrarySystemException {
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryUserService.register(request));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws LibrarySystemException{
+        return ResponseEntity.status(HttpStatus.CREATED).body(libraryUserService.login(loginRequest));
+    }
+
 
 
 

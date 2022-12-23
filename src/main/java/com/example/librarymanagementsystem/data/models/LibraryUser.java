@@ -1,11 +1,13 @@
 package com.example.librarymanagementsystem.data.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,4 +24,7 @@ public class LibraryUser {
     private String email;
     private String phoneNumber;
     private String password;
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.PERSIST)
+    private Set<Address> addresses = new HashSet<>();
 }

@@ -28,12 +28,27 @@ public class BookServiceImplTest {
         registerBook = RegisterBookRequest.builder().
                 title("Trust").author("Ade").edition("2nd").isbn(123456789L).build();
 
+
     }
+//    @Test
+//    void tearDown(){
+//        bookRepository.deleteAll();
+//    }
 
     @Test
     void registerBookTest(){
        RegisterBookResponse bookResponse = bookService.registerBook(registerBook);
        assertThat(bookResponse).isNotNull();
+    }
+
+    @Test
+    void getBookByIsbnTest(){
+        bookService.registerBook(registerBook);
+        var foundBook = bookService.getBookByIsbn(123456789L);
+        assertThat(foundBook).isNotNull();
+//        assertThat(foundBook.getIsbn()).isEqualTo(response.)
+
+
     }
     @Test
     void removeBookFromLibraryTest(){
@@ -41,20 +56,6 @@ public class BookServiceImplTest {
         bookService.registerBook(registerBook);
         bookService.deleteBook(123456789L);
         assertThat(bookRepository).isNull();
-//
-//        RegisterBookRequest anotherBook = RegisterBookRequest.builder().
-//                title("Love").author("Dee").edition("12th").isbn(987654321L).build();
-//
-//        DeleteBookRequest deleteBook = DeleteBookRequest.builder().
-//                title("Trust").author("Ade").edition("2nd").isbn(123456789L).build();
-//
-//        bookService.deleteBook(deleteBook);
-//        assertThat(bookRepository.count(), is(1L));
-//        assertEquals(1L, bookRepository.count());
-
-
-
-
     }
 
 }
