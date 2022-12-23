@@ -1,12 +1,6 @@
 package com.example.librarymanagementsystem.data.models;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-
-import java.util.Set;
-
-public class Admin extends LibraryUser{
+public class Admin extends Reader {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    private Long id;

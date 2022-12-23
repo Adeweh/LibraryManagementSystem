@@ -8,10 +8,12 @@ import com.example.librarymanagementsystem.data.dtos.responses.RegisterResponse;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface LibraryUserService {
+public interface ReaderService {
     RegisterResponse register(RegisterRequest registerRequest);
 
     LoginResponse login(LoginRequest loginRequest);
 
     String updateProfile(UpdateUserDetails details);
+
+    void deleteAll();
 }

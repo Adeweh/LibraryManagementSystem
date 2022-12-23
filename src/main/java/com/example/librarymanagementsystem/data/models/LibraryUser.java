@@ -1,30 +1,28 @@
 package com.example.librarymanagementsystem.data.models;
 
-
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@MappedSuperclass
 public class LibraryUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private String firstName;
     private String lastName;
     private String email;
-    private String phoneNumber;
     private String password;
-    @OneToMany(fetch = FetchType.EAGER)
-    @Cascade(CascadeType.PERSIST)
-    private Set<Address> addresses = new HashSet<>();
+    private String phoneNumber;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Authority> authorities = new HashSet<>();
 }

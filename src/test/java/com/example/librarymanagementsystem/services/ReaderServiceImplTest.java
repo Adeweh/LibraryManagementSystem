@@ -5,7 +5,8 @@ import com.example.librarymanagementsystem.data.dtos.requests.RegisterRequest;
 import com.example.librarymanagementsystem.data.dtos.requests.UpdateUserDetails;
 import com.example.librarymanagementsystem.data.dtos.responses.LoginResponse;
 import com.example.librarymanagementsystem.data.dtos.responses.RegisterResponse;
-import com.example.librarymanagementsystem.data.models.LibraryUser;
+import com.example.librarymanagementsystem.repository.ReaderRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,55 +15,56 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-public class LibraryUserServiceImplTest {
+public class ReaderServiceImplTest {
     @Autowired
-    private LibraryUserService libraryUserService;
-//    private LibraryUser user;
-
+    private ReaderService readerService;
+    @Autowired
+    private ReaderRepository readerRepository;
     private RegisterRequest registerRequest;
     private LoginRequest loginRequest;
+    RegisterResponse registerResponse;
 
     @BeforeEach
-    void setup(){
-//        user = LibraryUser.builder().firstName("Dee")
-//                .build();
+    void setup() {
         registerRequest = RegisterRequest.builder().
                 firstName("Jummy").lastName("Ade").email("ade@email.com")
                 .password("password1234").build();
 
         loginRequest = LoginRequest.builder().email("ade@email.com").password("password2345").build();
+        registerResponse = readerService.register(registerRequest);
+    }
+    @AfterEach
+    void tearDown(){
+        readerService.deleteAll();
     }
 
     @Test
-    void registerUserTest(){
-        RegisterResponse registerResponse = libraryUserService.register(registerRequest);
+    void registerUserTest() {
         assertThat(registerResponse).isNotNull();
     }
 
     @Test
-    void loginUserTest(){
+    void loginUserTest() {
 
-        LoginResponse loginResponse = libraryUserService.login(loginRequest);
+        LoginResponse loginResponse = readerService.login(loginRequest);
         assertThat(loginResponse).isNotNull();
 
     }
 
     @Test
-    void updateUserProfileTest(){
-        libraryUserService.register(registerRequest);
+    void updateUserProfileTest() {
+
         UpdateUserDetails details = UpdateUserDetails.builder().email(registerRequest.getEmail()).
                 city("Kaduna").street("Makaranta")
                 .state("Kaduna").phoneNumber("7777")
                 .build();
 
-        var updateResponse = libraryUserService.updateProfile(details);
+        var updateResponse = readerService.updateProfile(details);
         assertThat(updateResponse).isNotNull();
         assertThat(updateResponse.contains("success")).isTrue();
 
 
-
     }
-
 
 
 }

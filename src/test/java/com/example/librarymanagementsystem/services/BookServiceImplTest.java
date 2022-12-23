@@ -14,13 +14,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class BookServiceImplTest {
     @Autowired
     private BookService bookService;
-
-    private static BookRepository bookRepository;
+    @Autowired
+    private  BookRepository bookRepository;
     private static RegisterBookRequest registerBook;
 
     @BeforeEach
@@ -30,10 +31,10 @@ public class BookServiceImplTest {
 
 
     }
-//    @Test
-//    void tearDown(){
-//        bookRepository.deleteAll();
-//    }
+    @AfterEach
+    void tearDown(){
+        bookRepository.deleteAll();
+    }
 
     @Test
     void registerBookTest(){
@@ -55,7 +56,7 @@ public class BookServiceImplTest {
 
         bookService.registerBook(registerBook);
         bookService.deleteBook(123456789L);
-        assertThat(bookRepository).isNull();
+        assertTrue(bookRepository.findAll().isEmpty());
     }
 
 }
