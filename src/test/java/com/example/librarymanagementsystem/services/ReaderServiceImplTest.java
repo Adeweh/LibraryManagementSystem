@@ -13,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class ReaderServiceImplTest {
     @Autowired
     private ReaderService readerService;
+
     @Autowired
     private ReaderRepository readerRepository;
     private RegisterRequest registerRequest;
@@ -61,8 +63,14 @@ public class ReaderServiceImplTest {
 
         var updateResponse = readerService.updateProfile(details);
         assertThat(updateResponse).isNotNull();
-        assertThat(updateResponse.contains("success")).isTrue();
+//        assertThat(updateResponse.contains("success")).isTrue();
 
+    }
+
+    @Test
+    void removeUserTest(){
+       readerService.deleteUser("ade@email.com");
+       assertTrue(readerRepository.findAll().isEmpty());
 
     }
 

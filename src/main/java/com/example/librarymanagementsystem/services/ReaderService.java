@@ -5,6 +5,7 @@ import com.example.librarymanagementsystem.data.dtos.requests.RegisterRequest;
 import com.example.librarymanagementsystem.data.dtos.requests.UpdateUserDetails;
 import com.example.librarymanagementsystem.data.dtos.responses.LoginResponse;
 import com.example.librarymanagementsystem.data.dtos.responses.RegisterResponse;
+import com.example.librarymanagementsystem.data.dtos.responses.UpdateUserDetailsResponse;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +14,9 @@ public interface ReaderService {
 
     LoginResponse login(LoginRequest loginRequest);
 
-    String updateProfile(UpdateUserDetails details);
+    UpdateUserDetailsResponse updateProfile(UpdateUserDetails details);
 
     void deleteAll();
+
+    void deleteUser(String email);
 }

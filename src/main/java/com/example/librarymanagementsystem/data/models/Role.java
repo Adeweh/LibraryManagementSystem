@@ -1,10 +1,9 @@
 package com.example.librarymanagementsystem.data.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,5 +15,13 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Enumerated
     private RoleType roleType;
+    @OneToMany
+    @JoinColumn(name = "authority_id")
+    private Set<Authority> authorities;
+
+    public Role(RoleType roleType) {
+        this.roleType = roleType;
+    }
 }
