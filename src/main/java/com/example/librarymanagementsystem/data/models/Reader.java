@@ -19,8 +19,6 @@ public class Reader extends LibraryUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(fetch = FetchType.EAGER)
-    @Cascade(CascadeType.PERSIST)
-    private Set<Address> addresses = new HashSet<>();
+
 
 }

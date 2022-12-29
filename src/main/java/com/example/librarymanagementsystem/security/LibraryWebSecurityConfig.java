@@ -1,7 +1,7 @@
 package com.example.librarymanagementsystem.security;
 
 import com.example.librarymanagementsystem.security.JWT.ExceptionHandlerFilter;
-import com.example.librarymanagementsystem.security.JWT.JwtAuthenticationFilter;
+import com.example.librarymanagementsystem.security.JWT.JwtAuthFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +19,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class LibraryWebSecurityConfig {
     private final UnAuthorizedEntryPoint unAuthorizedEntryPoint;
 
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain  filterChain(HttpSecurity http) throws Exception {
         http.securityMatcher("/register").csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .anyRequest().permitAll() // allow CORS option calls for Swagger UI
@@ -29,8 +30,8 @@ public class LibraryWebSecurityConfig {
         return http.build();
     }
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(){
-        return new JwtAuthenticationFilter();
+    public JwtAuthFilter jwtAuthenticationFilter(){
+        return new JwtAuthFilter();
     }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){

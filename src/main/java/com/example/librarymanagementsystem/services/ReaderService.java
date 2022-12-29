@@ -6,11 +6,12 @@ import com.example.librarymanagementsystem.data.dtos.requests.UpdateUserDetails;
 import com.example.librarymanagementsystem.data.dtos.responses.LoginResponse;
 import com.example.librarymanagementsystem.data.dtos.responses.RegisterResponse;
 import com.example.librarymanagementsystem.data.dtos.responses.UpdateUserDetailsResponse;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface ReaderService {
-    RegisterResponse register(RegisterRequest registerRequest);
+    RegisterResponse register(RegisterRequest registerRequest) throws UnirestException;
 
     LoginResponse login(LoginRequest loginRequest);
 

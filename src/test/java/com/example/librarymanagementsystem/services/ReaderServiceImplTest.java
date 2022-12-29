@@ -6,6 +6,8 @@ import com.example.librarymanagementsystem.data.dtos.requests.UpdateUserDetails;
 import com.example.librarymanagementsystem.data.dtos.responses.LoginResponse;
 import com.example.librarymanagementsystem.data.dtos.responses.RegisterResponse;
 import com.example.librarymanagementsystem.repository.ReaderRepository;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
+@Slf4j
 public class ReaderServiceImplTest {
     @Autowired
     private ReaderService readerService;
@@ -27,9 +30,9 @@ public class ReaderServiceImplTest {
     RegisterResponse registerResponse;
 
     @BeforeEach
-    void setup() {
+    void setup() throws UnirestException {
         registerRequest = RegisterRequest.builder().
-                firstName("Jummy").lastName("Ade").email("ade@email.com")
+                firstName("Jummy").lastName("Ade").email("adewehabang@gmail.com")
                 .password("password1234").build();
 
         loginRequest = LoginRequest.builder().email("ade@email.com").password("password2345").build();
@@ -37,12 +40,19 @@ public class ReaderServiceImplTest {
     }
     @AfterEach
     void tearDown(){
+
         readerService.deleteAll();
     }
 
     @Test
     void registerUserTest() {
         assertThat(registerResponse).isNotNull();
+
+    }
+    @Test
+    void sendEmailTest(){
+
+
     }
 
     @Test

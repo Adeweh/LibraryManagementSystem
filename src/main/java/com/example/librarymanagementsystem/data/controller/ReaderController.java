@@ -6,6 +6,7 @@ import com.example.librarymanagementsystem.data.dtos.requests.UpdateUserDetails;
 import com.example.librarymanagementsystem.data.dtos.responses.UpdateUserDetailsResponse;
 import com.example.librarymanagementsystem.exceptions.LibrarySystemException;
 import com.example.librarymanagementsystem.services.ReaderService;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class ReaderController {
     private final ReaderService readerService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) throws LibrarySystemException {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) throws LibrarySystemException, UnirestException {
         return ResponseEntity.status(HttpStatus.CREATED).body(readerService.register(request));
     }
 

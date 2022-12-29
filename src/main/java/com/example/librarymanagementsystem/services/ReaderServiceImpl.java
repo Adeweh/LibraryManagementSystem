@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystem.services;
 
 import com.example.librarymanagementsystem.data.dtos.requests.LoginRequest;
+import com.example.librarymanagementsystem.data.dtos.requests.MailRequest;
 import com.example.librarymanagementsystem.data.dtos.requests.RegisterRequest;
 import com.example.librarymanagementsystem.data.dtos.requests.UpdateUserDetails;
 import com.example.librarymanagementsystem.data.dtos.responses.LoginResponse;
@@ -11,6 +12,7 @@ import com.example.librarymanagementsystem.data.models.Role;
 import com.example.librarymanagementsystem.exceptions.BookNotFoundException;
 import com.example.librarymanagementsystem.exceptions.LibrarySystemException;
 import com.example.librarymanagementsystem.repository.ReaderRepository;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,8 +37,10 @@ public class ReaderServiceImpl implements ReaderService, UserDetailsService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final ModelMapper mapper;
+
+    private final EmailService emailService;
     @Override
-    public RegisterResponse register(RegisterRequest registerRequest) {
+    public RegisterResponse register(RegisterRequest registerRequest) throws UnirestException {
         Optional<Reader> user = readerRepository.findByEmail(registerRequest.getEmail());
         if(user.isPresent())
             throw new LibrarySystemException("User dey abeg", 404);
@@ -47,7 +51,20 @@ public class ReaderServiceImpl implements ReaderService, UserDetailsService {
 
         Reader savedUser = readerRepository.save(reader);
         RegisterResponse response = new RegisterResponse("User"+savedUser.getFirstName()+" registered");
+        sendMail(registerRequest);
         return response;
+    }
+
+    private void sendMail(RegisterRequest register) throws UnirestException{
+        MailRequest mailRequest = MailRequest.builder()
+                .sender(System.getenv("SENDER"))
+                .receiver(register.getEmail())
+                .subject("Welcome to Modern Library")
+                .body("Hello" + register.getFirstName()+"."+
+                        "We are glad to let you know you have successfully registered")
+        .build();
+        emailService.sendSimpleMail(mailRequest);
+
     }
 
     @Override
